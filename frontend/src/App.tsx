@@ -18,6 +18,7 @@ function App() {
   const [items, setItems] = useState<Item[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [selectedType, setSelectedType] = useState('All')
 
   useEffect(() => {
     if (!token) return
@@ -87,7 +88,25 @@ function App() {
       {error && <p>Error: {error}</p>}
 
       {!loading && !error && (
-        <table>
+        <>
+          <div className="filter-container" style={{ marginBottom: '1rem' }}>
+            <label htmlFor="type-filter" style={{ marginRight: '0.5rem' }}>
+              Filter by type:
+            </label>
+            <select
+              id="type-filter"
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+            >
+              <option value="All">All</option>
+              {[...new Set(items.map((item) => item.type))].map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
+          <table>
           <thead>
             <tr>
               <th>ID</th>
@@ -97,16 +116,22 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => (
-              <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>{item.type}</td>
-                <td>{item.title}</td>
-                <td>{item.created_at}</td>
-              </tr>
-            ))}
+            {items
+              .filter(
+                (item) =>
+                  selectedType === 'All' || item.type === selectedType,
+              )
+              .map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.type}</td>
+                  <td>{item.title}</td>
+                  <td>{item.created_at}</td>
+                </tr>
+              ))}
           </tbody>
         </table>
+      </>
       )}
     </div>
   )
