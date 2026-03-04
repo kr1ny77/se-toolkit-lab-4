@@ -7,6 +7,7 @@ interface Item {
   id: number
   type: string
   title: string
+  description: string
   created_at: string
 }
 
@@ -107,31 +108,33 @@ function App() {
             </select>
           </div>
           <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Type</th>
-              <th>Title</th>
-              <th>Created at</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items
-              .filter(
-                (item) =>
-                  selectedType === 'All' || item.type === selectedType,
-              )
-              .map((item) => (
-                <tr key={item.id}>
-                  <td>{item.id}</td>
-                  <td>{item.type}</td>
-                  <td>{item.title}</td>
-                  <td>{item.created_at}</td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Created at</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items
+                .filter(
+                  (item) =>
+                    selectedType === 'All' || item.type === selectedType,
+                )
+                .map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.id}</td>
+                    <td>{item.type}</td>
+                    <td>{item.title}</td>
+                    <td>{item.description}</td>
+                    <td>{item.created_at}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </>
       )}
     </div>
   )
