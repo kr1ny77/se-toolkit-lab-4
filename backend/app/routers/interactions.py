@@ -20,7 +20,7 @@ def filter_by_max_item_id(
 ) -> list[InteractionLog]:
     if max_item_id is None:
         return interactions
-    return [i for i in interactions if i.item_id < max_item_id]
+    return [i for i in interactions if i.item_id <= max_item_id]
 
 
 @router.get("/", response_model=list[InteractionModel])
@@ -51,3 +51,6 @@ async def post_interaction(
             status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail=str(exc.orig),
         )
+
+
+
